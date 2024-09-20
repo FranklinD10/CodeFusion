@@ -1,9 +1,12 @@
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
 const mergeButton = document.getElementById('mergeButton');
 const downloadLink = document.getElementById('downloadLink');
+const resetButton = document.getElementById('resetButton');
 const progress = document.getElementById('progress');
 const progressBar = document.getElementById('progressBar');
+const loading = document.getElementById('loading');
 
 dropZone.addEventListener('click', () => fileInput.click());
 
@@ -18,7 +21,21 @@ dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
     dropZone.classList.remove('dragover');
     fileInput.files = e.dataTransfer.files;
+    displayFileList();
 });
+
+fileInput.addEventListener('change', displayFileList);
+
+function displayFileList() {
+    fileList.innerHTML = '';
+    for (let i = 0; i < fileInput.files.length; i++) {
+        const file = fileInput.files[i];
+        const fileType = file.type.split('/')[0];
+        const fileInfo = document.createElement('p');
+        fileInfo.textContent = `${file.name} (${fileType})`;
+        fileList.appendChild(fileInfo);
+    }
+}
 
 mergeButton.addEventListener('click', () => {
     const files = fileInput.files;
@@ -31,15 +48,21 @@ mergeButton.addEventListener('click', () => {
     const promises = [];
     progress.style.display = 'block';
     progressBar.style.width = '0%';
+    loading.style.display = 'block';
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        const fileType = file.type.split('/')[0];
         const promise = new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (event) => {
-                mergedContent += `\n--- Start of ${file.name} ---\n`;
-                mergedContent += event.target.result;
-                mergedContent += `\n--- End of ${file.name} ---\n`;
+                if (fileType === 'text' || fileType === 'application') {
+                    mergedContent += `\n--- Start of ${file.name} ---\n`;
+                    mergedContent += event.target.result;
+                    mergedContent += `\n--- End of ${file.name} ---\n`;
+                } else {
+                    mergedContent += `\n--- ${file.name} is a ${fileType} file and cannot be displayed as text ---\n`;
+                }
                 progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
                 resolve();
             };
@@ -57,8 +80,18 @@ mergeButton.addEventListener('click', () => {
         downloadLink.style.display = 'block';
         downloadLink.textContent = 'Download Merged File';
         progress.style.display = 'none';
+        loading.style.display = 'none';
+        resetButton.style.display = 'block';
     }).catch(error => {
         console.error('Error reading files:', error);
         progress.style.display = 'none';
+        loading.style.display = 'none';
     });
+});
+
+resetButton.addEventListener('click', () => {
+    fileInput.value = '';
+    fileList.innerHTML = '';
+    downloadLink.style.display = 'none';
+    resetButton.style.display = 'none';
 });

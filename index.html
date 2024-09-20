@@ -13,11 +13,14 @@
             <p>Drag & Drop files here or click to upload</p>
             <input type="file" id="fileInput" multiple>
         </div>
+        <div id="fileList" class="file-list"></div>
         <button id="mergeButton">Merge Files</button>
         <div id="progress" class="progress" style="display: none;">
             <div id="progressBar" class="progress-bar"></div>
         </div>
+        <div id="loading" class="loading" style="display: none;">Processing...</div>
         <a id="downloadLink" style="display: none;">Download Merged File</a>
+        <button id="resetButton" style="display: none;">Start Over</button>
     </div>
     <script src="script.js"></script>
 </body>
