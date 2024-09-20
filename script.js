@@ -4,9 +4,11 @@ const fileList = document.getElementById('fileList');
 const mergeButton = document.getElementById('mergeButton');
 const downloadLink = document.getElementById('downloadLink');
 const resetButton = document.getElementById('resetButton');
+const exportPDFButton = document.getElementById('exportPDFButton');
 const progress = document.getElementById('progress');
 const progressBar = document.getElementById('progressBar');
 const loading = document.getElementById('loading');
+const darkModeToggle = document.getElementById('darkModeToggle');
 
 dropZone.addEventListener('click', () => fileInput.click());
 
@@ -80,6 +82,8 @@ mergeButton.addEventListener('click', () => {
         downloadLink.download = 'merged.txt';
         downloadLink.style.display = 'block';
         downloadLink.textContent = 'Download Merged File';
+        exportPDFButton.style.display = 'block';
+        mergeButton.style.display = 'none';
         progress.style.display = 'none';
         loading.style.display = 'none';
         resetButton.style.display = 'block';
@@ -95,5 +99,51 @@ resetButton.addEventListener('click', () => {
     fileList.innerHTML = '';
     fileList.style.display = 'none';
     downloadLink.style.display = 'none';
+    exportPDFButton.style.display = 'none';
     resetButton.style.display = 'none';
+    mergeButton.style.display = 'block';
+});
+
+exportPDFButton.addEventListener('click', () => {
+    const files = fileInput.files;
+    if (files.length === 0) {
+        alert('Please select some files first.');
+        return;
+    }
+
+    let mergedContent = '';
+    const promises = [];
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileType = file.type.split('/')[0];
+        const promise = new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (fileType === 'text' || fileType === 'application') {
+                    mergedContent += `\n--- Start of ${file.name} ---\n`;
+                    mergedContent += event.target.result;
+                    mergedContent += `\n--- End of ${file.name} ---\n`;
+                } else {
+                    mergedContent += `\n--- ${file.name} is a ${fileType} file and cannot be displayed as text ---\n`;
+                }
+                resolve();
+            };
+            reader.onerror = () => reject(reader.error);
+            reader.readAsText(file);
+        });
+        promises.push(promise);
+    }
+
+    Promise.all(promises).then(() => {
+        const pdf = new jsPDF();
+        pdf.text(mergedContent, 10, 10);
+        pdf.save('merged.pdf');
+    }).catch(error => {
+        console.error('Error reading files:', error);
+    });
+});
+
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
 });
