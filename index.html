@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFusion</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CodeFusion</h1>
+        <input type="file" id="fileInput" multiple>
+        <button id="mergeButton">Merge Files</button>
+        <a id="downloadLink" style="display: none;">Download Merged File</a>
+    </div>
+    <script>
+        document.getElementById('mergeButton').addEventListener('click', function() {
+            const input = document.getElementById('fileInput');
+            const files = input.files;
+            if (files.length === 0) {
+                alert('Please select some files first.');
+                return;
+            }
+
+            let mergedContent = '';
+            const promises = [];
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const promise = new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        mergedContent += `\n--- Start of ${file.name} ---\n`;
+                        mergedContent += event.target.result;
+                        mergedContent += `\n--- End of ${file.name} ---\n`;
+                        resolve();
+                    };
+                    reader.onerror = function() {
+                        reject(reader.error);
+                    };
+                    reader.readAsText(file);
+                });
+                promises.push(promise);
+            }
+
+            Promise.all(promises).then(() => {
+                const blob = new Blob([mergedContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = url;
+                downloadLink.download = 'merged.txt';
+                downloadLink.style.display = 'block';
+                downloadLink.textContent = 'Download Merged File';
+            }).catch(error => {
+                console.error('Error reading files:', error);
+            });
+        });
+    </script>
+</body>
+</html>
