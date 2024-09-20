@@ -4,30 +4,21 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
     margin: 0;
     overflow: hidden;
-}
-
-body.dark-mode {
-    background: linear-gradient(135deg, #2c3e50, #4ca1af);
     color: #f5f7fa;
 }
 
 .container {
     text-align: center;
-    background: #fff;
+    background: #2c3e50;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 100%;
     animation: fadeIn 1s ease-in-out;
-}
-
-body.dark-mode .container {
-    background: #2c3e50;
-    color: #f5f7fa;
 }
 
 @keyframes fadeIn {
@@ -44,12 +35,8 @@ body.dark-mode .container {
 h1 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
-    animation: slideIn 1s ease-in-out;
-}
-
-body.dark-mode h1 {
     color: #f5f7fa;
+    animation: slideIn 1s ease-in-out;
 }
 
 @keyframes slideIn {
@@ -64,7 +51,7 @@ body.dark-mode h1 {
 }
 
 .drop-zone {
-    border: 2px dashed #007bff;
+    border: 2px dashed #4ca1af;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 20px;
@@ -72,17 +59,9 @@ body.dark-mode h1 {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-body.dark-mode .drop-zone {
-    border: 2px dashed #4ca1af;
-}
-
 .drop-zone:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05);
-}
-
-body.dark-mode .drop-zone:hover {
     background-color: #34495e;
+    transform: scale(1.05);
 }
 
 input[type="file"] {
@@ -98,16 +77,12 @@ input[type="file"] {
 .file-list p {
     margin: 5px 0;
     font-size: 14px;
-    color: #555;
-}
-
-body.dark-mode .file-list p {
     color: #f5f7fa;
 }
 
 .btn {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #4ca1af;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -117,17 +92,9 @@ body.dark-mode .file-list p {
     margin-top: 10px;
 }
 
-body.dark-mode .btn {
-    background-color: #4ca1af;
-}
-
 .btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-body.dark-mode .btn:hover {
     background-color: #3b6978;
+    transform: scale(1.05);
 }
 
 a.btn {
@@ -136,35 +103,23 @@ a.btn {
 
 .progress {
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #34495e;
     border-radius: 5px;
     overflow: hidden;
     margin-top: 20px;
     animation: fadeIn 1s ease-in-out;
 }
 
-body.dark-mode .progress {
-    background-color: #34495e;
-}
-
 .progress-bar {
     height: 20px;
-    background-color: #007bff;
+    background-color: #4ca1af;
     width: 0;
     transition: width 0.3s;
-}
-
-body.dark-mode .progress-bar {
-    background-color: #4ca1af;
 }
 
 .loading {
     margin-top: 20px;
     font-size: 16px;
-    color: #333;
-    animation: fadeIn 1s ease-in-out;
-}
-
-body.dark-mode .loading {
     color: #f5f7fa;
+    animation: fadeIn 1s ease-in-out;
 }

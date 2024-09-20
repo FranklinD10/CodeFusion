@@ -8,7 +8,6 @@ const exportPDFButton = document.getElementById('exportPDFButton');
 const progress = document.getElementById('progress');
 const progressBar = document.getElementById('progressBar');
 const loading = document.getElementById('loading');
-const darkModeToggle = document.getElementById('darkModeToggle');
 
 dropZone.addEventListener('click', () => fileInput.click());
 
@@ -136,14 +135,11 @@ exportPDFButton.addEventListener('click', () => {
     }
 
     Promise.all(promises).then(() => {
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF();
         pdf.text(mergedContent, 10, 10);
         pdf.save('merged.pdf');
     }).catch(error => {
         console.error('Error reading files:', error);
     });
-});
-
-darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
 });
