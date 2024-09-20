@@ -35,6 +35,7 @@ function displayFileList() {
         fileInfo.textContent = `${file.name} (${fileType})`;
         fileList.appendChild(fileInfo);
     }
+    fileList.style.display = 'block';
 }
 
 mergeButton.addEventListener('click', () => {
@@ -92,6 +93,7 @@ mergeButton.addEventListener('click', () => {
 resetButton.addEventListener('click', () => {
     fileInput.value = '';
     fileList.innerHTML = '';
+    fileList.style.display = 'none';
     downloadLink.style.display = 'none';
     resetButton.style.display = 'none';
 });
