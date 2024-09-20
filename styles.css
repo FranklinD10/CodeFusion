@@ -79,7 +79,7 @@ input[type="file"] {
     color: #555;
 }
 
-button {
+.btn {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -87,24 +87,17 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    display: inline-block;
+    margin-top: 10px;
 }
 
-button:hover {
+.btn:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
 
-a {
-    display: block;
-    margin-top: 20px;
-    color: #007bff;
+a.btn {
     text-decoration: none;
-    transition: color 0.3s;
-}
-
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
 }
 
 .progress {
