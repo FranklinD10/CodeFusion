@@ -137,7 +137,16 @@ exportPDFButton.addEventListener('click', () => {
     Promise.all(promises).then(() => {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF();
-        pdf.text(mergedContent, 10, 10);
+        const lines = pdf.splitTextToSize(mergedContent, 180);
+        let y = 10;
+        lines.forEach(line => {
+            if (y > 280) {
+                pdf.addPage();
+                y = 10;
+            }
+            pdf.text(line, 10, y);
+            y += 10;
+        });
         pdf.save('merged.pdf');
     }).catch(error => {
         console.error('Error reading files:', error);

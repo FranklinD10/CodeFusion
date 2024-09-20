@@ -90,36 +90,16 @@ input[type="file"] {
     transition: background-color 0.3s, transform 0.3s;
     display: inline-block;
     margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn i {
+    margin-right: 5px;
 }
 
 .btn:hover {
     background-color: #3b6978;
     transform: scale(1.05);
-}
-
-a.btn {
-    text-decoration: none;
-}
-
-.progress {
-    width: 100%;
-    background-color: #34495e;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 20px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.progress-bar {
-    height: 20px;
-    background-color: #4ca1af;
-    width: 0;
-    transition: width 0.3s;
-}
-
-.loading {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #f5f7fa;
-    animation: fadeIn 1s ease-in-out;
 }

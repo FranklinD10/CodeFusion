@@ -6,7 +6,9 @@
     <title>CodeFusion</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 <body class="dark-mode">
     <div class="container">
@@ -16,16 +18,16 @@
             <input type="file" id="fileInput" multiple>
         </div>
         <div id="fileList" class="file-list"></div>
-        <button id="mergeButton" class="btn">Merge Files</button>
+        <button id="mergeButton" class="btn"><i class="fas fa-file-merge"></i> Merge Files</button>
         <div id="progress" class="progress" style="display: none;">
             <div id="progressBar" class="progress-bar"></div>
         </div>
         <div id="loading" class="loading" style="display: none;">
             <i class="fas fa-spinner fa-spin"></i> Processing...
         </div>
-        <a id="downloadLink" class="btn" style="display: none;">Download Merged File</a>
-        <button id="resetButton" class="btn" style="display: none;">Start Over</button>
-        <button id="exportPDFButton" class="btn" style="display: none;">Export to PDF</button>
+        <a id="downloadLink" class="btn" style="display: none;"><i class="fas fa-download"></i> Download Merged File</a>
+        <button id="resetButton" class="btn" style="display: none;"><i class="fas fa-redo"></i> Start Over</button>
+        <button id="exportPDFButton" class="btn" style="display: none;"><i class="fas fa-file-pdf"></i> Export to PDF</button>
     </div>
     <script src="script.js"></script>
 </body>
