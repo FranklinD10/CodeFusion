@@ -29,7 +29,7 @@ Merge code files to create a single document for debugging or testing purposes. 
 Teams working on different parts of a project can merge their code files to create a unified document, facilitating better collaboration and integration.
 
 ### 9. AI
-Helpful when interactive with AI chatbots for assistance with coding projects.
+Helpful when interacting with AI chatbots for assistance with coding projects.
 
 ## Features
 
