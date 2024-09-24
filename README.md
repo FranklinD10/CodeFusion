@@ -49,7 +49,7 @@ Helpful when interacting with AI chatbots for assistance with coding projects.
 
 ## Getting Started
 
-- Navigate to <https://fc.frapps.tech>
+- Navigate to <https://cf.frapps.tech>
 
 ### Prerequisites
 
