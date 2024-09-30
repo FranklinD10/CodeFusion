@@ -33,7 +33,7 @@ function displayFileList() {
         const file = fileInput.files[i];
         const fileType = file.type.split('/')[0];
         const fileInfo = document.createElement('p');
-        fileInfo.textContent = `${file.name} (${fileType})`;
+        fileInfo.textContent = `${file.webkitRelativePath} (${fileType})`;
         fileList.appendChild(fileInfo);
     }
     fileList.style.display = 'block';
@@ -59,11 +59,11 @@ mergeButton.addEventListener('click', () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 if (fileType === 'text' || fileType === 'application') {
-                    mergedContent += `\n--- Start of ${file.name} ---\n`;
+                    mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
                     mergedContent += event.target.result;
-                    mergedContent += `\n--- End of ${file.name} ---\n`;
+                    mergedContent += `\n--- End of ${file.webkitRelativePath} ---\n`;
                 } else {
-                    mergedContent += `\n--- ${file.name} is a ${fileType} file and cannot be displayed as text ---\n`;
+                    mergedContent += `\n--- ${file.webkitRelativePath} is a ${fileType} file and cannot be displayed as text ---\n`;
                 }
                 progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
                 resolve();
@@ -120,11 +120,11 @@ exportPDFButton.addEventListener('click', () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 if (fileType === 'text' || fileType === 'application') {
-                    mergedContent += `\n--- Start of ${file.name} ---\n`;
+                    mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
                     mergedContent += event.target.result;
-                    mergedContent += `\n--- End of ${file.name} ---\n`;
+                    mergedContent += `\n--- End of ${file.webkitRelativePath} ---\n`;
                 } else {
-                    mergedContent += `\n--- ${file.name} is a ${fileType} file and cannot be displayed as text ---\n`;
+                    mergedContent += `\n--- ${file.webkitRelativePath} is a ${fileType} file and cannot be displayed as text ---\n`;
                 }
                 resolve();
             };
