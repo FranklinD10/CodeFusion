@@ -73,7 +73,7 @@ mergeButton.addEventListener('click', () => {
     const promise = new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
-        console.log(`File read successfully: ${file.webkitRelativePath}`);
+
         if (isTextFile(file)) {
           mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
           mergedContent += event.target.result;
@@ -181,7 +181,7 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')
         .then(registration => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+
         }, error => {
           console.log('ServiceWorker registration failed: ', error);
         });

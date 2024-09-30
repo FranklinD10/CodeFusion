@@ -5,7 +5,8 @@ const urlsToCache = [
   '/styles.css',
   '/script.js',
   '/manifest.json',
-  '/icon.svg'
+  '/icon.svg',
+  '/img/icons'
 ];
 
 // Install a service worker
