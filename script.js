@@ -9,6 +9,19 @@ const progress = document.getElementById('progress');
 const progressBar = document.getElementById('progressBar');
 const loading = document.getElementById('loading');
 
+function isTextFile(file) {
+    const textTypes = [
+      'text/', 'application/json', 'application/javascript', 'application/xml',
+      'application/xhtml+xml', 'application/x-sh', 'application/x-csh'
+    ];
+    return textTypes.some(type => file.type.startsWith(type));
+  }
+
+function shouldProcessFile(file) {
+    // Ignore hidden files and folders (those starting with a dot)
+    return !file.webkitRelativePath.split('/').some(part => part.startsWith('.'));
+}
+
 dropZone.addEventListener('click', () => fileInput.click());
 
 dropZone.addEventListener('dragover', (e) => {
@@ -40,43 +53,49 @@ function displayFileList() {
 }
 
 mergeButton.addEventListener('click', () => {
-  const files = fileInput.files;
-  if (files.length === 0) {
+    const files = fileInput.files;
+    if (files.length === 0) {
       alert('Please select some files first.');
       return;
-  }
-  let mergedContent = '';
-  const promises = [];
-  progress.style.display = 'block';
-  progressBar.style.width = '0%';
-  loading.style.display = 'block';
-  for (let i = 0; i < files.length; i++) {
+    }
+    let mergedContent = '';
+    const promises = [];
+    progress.style.display = 'block';
+    progressBar.style.width = '0%';
+    loading.style.display = 'block';
+  
+    for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const fileType = file.type.split('/');
-      console.log(`Processing file: ${file.webkitRelativePath} (${fileType})`); // Debugging statement
+      if (!shouldProcessFile(file)) continue;
+  
       const promise = new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-              console.log(`File read successfully: ${file.webkitRelativePath}`); // Debugging statement
-              if (fileType === 'text' || fileType === 'application') {
-                  mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
-                  mergedContent += event.target.result;
-                  mergedContent += `\n--- End of ${file.webkitRelativePath} ---\n`;
-              } else {
-                  mergedContent += `\n--- ${file.webkitRelativePath} is a ${fileType} file and cannot be displayed as text ---\n`;
-              }
-              progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
-              resolve();
-          };
-          reader.onerror = () => {
-              console.error(`Error reading file: ${file.webkitRelativePath}`, reader.error); // Debugging statement
-              reject(reader.error);
-          };
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          console.log(`File read successfully: ${file.webkitRelativePath}`);
+          if (isTextFile(file)) {
+            mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
+            mergedContent += event.target.result;
+            mergedContent += `\n--- End of ${file.webkitRelativePath} ---\n`;
+          } else {
+            mergedContent += `\n--- ${file.webkitRelativePath} is a binary file and cannot be displayed as text ---\n`;
+          }
+          progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
+          resolve();
+        };
+        reader.onerror = () => {
+          console.error(`Error reading file: ${file.webkitRelativePath}`, reader.error);
+          reject(reader.error);
+        };
+        if (isTextFile(file)) {
           reader.readAsText(file);
+        } else {
+          resolve();
+        }
       });
       promises.push(promise);
-  }
-  Promise.all(promises).then(() => {
+    }
+  
+    Promise.all(promises).then(() => {
       const blob = new Blob([mergedContent], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       downloadLink.href = url;
@@ -88,13 +107,13 @@ mergeButton.addEventListener('click', () => {
       progress.style.display = 'none';
       loading.style.display = 'none';
       resetButton.style.display = 'block';
-  }).catch(error => {
+    }).catch(error => {
       console.error('Error reading files:', error);
       progress.style.display = 'none';
       loading.style.display = 'none';
+    });
   });
-});
-
+  
 resetButton.addEventListener('click', () => {
     fileInput.value = '';
     fileList.innerHTML = '';
