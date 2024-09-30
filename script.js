@@ -19,7 +19,8 @@ function isTextFile(file) {
 }
 
 function shouldProcessFile(file) {
-  return !file.webkitRelativePath.split('/').some(part => part.startsWith('.'));
+  const pathParts = file.webkitRelativePath.split('/');
+  return !pathParts.some(part => part.startsWith('.') && part !== '.');
 }
 
 dropZone.addEventListener('click', () => fileInput.click());
@@ -43,11 +44,12 @@ fileInput.addEventListener('change', displayFileList);
 function displayFileList() {
   fileList.innerHTML = '';
   for (let i = 0; i < fileInput.files.length; i++) {
-      const file = fileInput.files[i];
-      const fileType = file.type.split('/');
+    const file = fileInput.files[i];
+    if (shouldProcessFile(file)) {
       const fileInfo = document.createElement('p');
-      fileInfo.textContent = `${file.webkitRelativePath} (${fileType})`;
+      fileInfo.textContent = `${file.webkitRelativePath} (${file.type || 'unknown'})`;
       fileList.appendChild(fileInfo);
+    }
   }
   fileList.style.display = 'block';
 }
@@ -113,7 +115,7 @@ mergeButton.addEventListener('click', () => {
     loading.style.display = 'none';
   });
 });
-  
+
 resetButton.addEventListener('click', () => {
     fileInput.value = '';
     fileList.innerHTML = '';
