@@ -53,9 +53,11 @@ mergeButton.addEventListener('click', () => {
   for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const fileType = file.type.split('/');
+      console.log(`Processing file: ${file.webkitRelativePath} (${fileType})`); // Debugging statement
       const promise = new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = (event) => {
+              console.log(`File read successfully: ${file.webkitRelativePath}`); // Debugging statement
               if (fileType === 'text' || fileType === 'application') {
                   mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
                   mergedContent += event.target.result;
@@ -66,7 +68,10 @@ mergeButton.addEventListener('click', () => {
               progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
               resolve();
           };
-          reader.onerror = () => reject(reader.error);
+          reader.onerror = () => {
+              console.error(`Error reading file: ${file.webkitRelativePath}`, reader.error); // Debugging statement
+              reject(reader.error);
+          };
           reader.readAsText(file);
       });
       promises.push(promise);
