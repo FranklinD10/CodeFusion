@@ -1,17 +1,16 @@
 {
-    "name": "CodeFusion",
-    "short_name": "CodeFusion",
-    "description": "A tool to merge multiple files into a single text file or PDF.",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#2c3e50",
-    "theme_color": "#4ca1af",
-    "icons": [
-      {
-        "src": "icon.svg",
-        "sizes": "any",
-        "type": "image/svg+xml"
-      }
-    ]
-  }
-  
+  "name": "CodeFusion",
+  "short_name": "CodeFusion",
+  "description": "A tool to merge multiple files into a single text file or PDF.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2c3e50",
+  "theme_color": "#4ca1af",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

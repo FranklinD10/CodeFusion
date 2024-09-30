@@ -1,14 +1,13 @@
 // service-worker.js
 
-const CACHE_NAME = 'congregation-savings-cache-v1';
+const CACHE_NAME = 'codefusion-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/style.css',
-  '/app.js',
-  '/firebase.js',
-  '/icon-128x128.png',
-  '/icon.svg',
+  '/styles.css',
+  '/script.js',
+  '/manifest.json',
+  '/icon.svg'
 ];
 
 // Install a service worker
@@ -27,11 +26,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+        return response || fetch(event.request);
       })
   );
 });
