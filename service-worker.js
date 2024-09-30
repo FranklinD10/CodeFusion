@@ -11,13 +11,20 @@ const urlsToCache = [
 ];
 
 // Install a service worker
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open('static-v1').then((cache) => {
+      return cache.addAll([
+        '/',
+        'index.html',
+        'styles.css',
+        'script.js',
+        'img/icons/icon-192.png',
+        'img/icons/icon-512.png',
+        'img/icons/icon-180.png',
+        'img/icons/icon.svg'
+      ]);
+    })
   );
 });
 
