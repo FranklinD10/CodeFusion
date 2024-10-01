@@ -6,8 +6,17 @@ body {
     height: 100vh;
     background: linear-gradient(135deg, #2c3e50, #4ca1af);
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
     color: #f5f7fa;
+}
+
+#fileListContainer {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: linear-gradient(135deg, #2c3e50, #4ca1af);
 }
 
 .container {
@@ -107,4 +116,32 @@ input[type="file"] {
 img {
     vertical-align: middle;
     margin-right: 5px;
+}
+
+.file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.file-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.remove-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: #ff1a1a;
 }
