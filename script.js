@@ -10,9 +10,7 @@ const progressBar = document.getElementById('progressBar');
 const loading = document.getElementById('loading');
 
 function isTextFile(file) {
-    const textExtensions = [
-        'txt', 'js', 'json', 'html', 'css', 'xml', 'md', 'csv', 'log', 'php', 'py', 'rb', 'java', 'c', 'cpp', 'h', 'sh', 'yaml', 'yml'
-    ];
+    const textExtensions = ['txt', 'js', 'json', 'html', 'css', 'xml', 'md', 'csv', 'log', 'php', 'py', 'rb', 'java', 'c', 'cpp', 'h', 'sh', 'yaml', 'yml', 'ts', 'tsx', 'jsx', 'go', 'rs', 'vue', 'svelte', 'sql', 'bash', 'dockerfile', 'toml', 'ini', 'cfg', 'conf', 'bat', 'ps1', 'psm1', 'psd1', 'vbs', 'applescript', 'scpt', 'ahk', 'au3', 'cmd', 'swift', 'kt', 'dart', 'scala', 'clj', 'el', 'lisp', 'scm', 'r', 'jl', 'pl', 'pm', 't', 'awk', 'sed', 'm4', 'makefile', 'mk', 'cmake', 'gyp', 'pro', 'pri', 'ebuild', 'eclass'];
     const fileExtension = file.name.split('.').pop().toLowerCase();
     return textExtensions.includes(fileExtension) || file.type.startsWith('text/') || file.type === 'application/json' || file.type === 'application/javascript';
 }
@@ -151,16 +149,15 @@ exportPDFButton.addEventListener('click', () => {
     const promises = [];
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const fileType = file.type.split('/');
         const promise = new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = (event) => {
-                if (fileType === 'text' || fileType === 'application') {
+                if (isTextFile(file)) {
                     mergedContent += `\n--- Start of ${file.webkitRelativePath} ---\n`;
                     mergedContent += event.target.result;
                     mergedContent += `\n--- End of ${file.webkitRelativePath} ---\n`;
                 } else {
-                    mergedContent += `\n--- ${file.webkitRelativePath} is a ${fileType} file and cannot be displayed as text ---\n`;
+                    mergedContent += `\n--- ${file.webkitRelativePath} is a binary file and cannot be displayed as text ---\n`;
                 }
                 resolve();
             };
